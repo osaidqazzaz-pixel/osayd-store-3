@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function ownerEmail() { return 'osaidqazzaz@gmail.com'; }
+    function isOwner() {
+      return signedIn() && request.auth.token.email_verified == true && (
+        request.auth.token.email == ownerEmail() ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
+      );
+    }
+
+    // المنتجات: أي مستخدم مسجل دخول يقدر يشوفها. المالك بس يقدر يضيف/يحذف
+    // أو يعدّل بشكل كامل. أي زبون مسجل دخول مسموحله فقط ينقص حقل الكمية
+    // (qty) عند الشراء — ما يقدر يزيدها ولا يغيّر السعر أو أي حقل تاني.
+    match /products/{productId} {
+      allow read: if signedIn();
+      allow create, delete: if isOwner();
+      allow update: if isOwner() ||
+        (signedIn()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['qty'])
+          && request.resource.data.qty >= 0
+          && request.resource.data.qty <= resource.data.qty);
+    }
+
+    // الطلبات: أي زبون مسجل دخول يقدر ينشئ طلب لحاله بس (ما يقدر يزوّر طلب
+    // باسم زبون تاني). تعديل الحالة أو حذف الطلب بصلاحية المالك فقط.
+    match /orders/{orderId} {
+      allow read: if signedIn();
+      allow create: if isOwner() || (
+        signedIn()
+        && request.resource.data.customerEmail == request.auth.token.email
+      );
+      allow update, delete: if isOwner();
+    }
+
+    // العملاء: إدارة يدوية من المالك فقط
+    match /customers/{customerId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isOwner();
+    }
+
+    // قائمة الموظفين/المسؤولين المصرح لهم (غير المالك الأساسي)
+    match /admins/{email} {
+      allow read: if isOwner();
+      allow create, delete: if isOwner();
+    }
+
+    // إعدادات المتجر (لون الواجهة وغيره) — أي حدا (حتى قبل تسجيل الدخول)
+    // يقدر يقرأها عشان يتلوّن الموقع بشكل صحيح، بس المالك بس يقدر يعدّلها
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+  }
+}
