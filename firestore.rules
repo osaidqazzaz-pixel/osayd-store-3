@@ -42,10 +42,10 @@ service cloud.firestore {
     }
 
     // قائمة الموظفين/المسؤولين المصرح لهم (غير المالك الأساسي)
-    match /admins/{email} {
-      allow read: if isOwner();
-      allow create, delete: if isOwner();
-    }
+match /admins/{email} {
+  allow read: if isOwner() || (signedIn() && request.auth.token.email == email);
+  allow create, delete: if isOwner();
+}
 
     // إعدادات المتجر (لون الواجهة وغيره) — أي حدا (حتى قبل تسجيل الدخول)
     // يقدر يقرأها عشان يتلوّن الموقع بشكل صحيح، بس المالك بس يقدر يعدّلها
