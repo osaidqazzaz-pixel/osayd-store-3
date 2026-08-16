@@ -375,29 +375,32 @@
     <div id="dashboardScreen" class="hidden">
     <div class="flex h-screen overflow-hidden relative z-10">
 
-        <!-- القائمة الجانبية -->
-        <!-- طبقة تعتيم خلف القائمة الجانبية بوضع الجوال -->
-        <div id="sidebarBackdrop" class="hidden fixed inset-0 bg-black/60 z-30 md:hidden"></div>
-
-        <aside id="appSidebar" class="w-64 glass text-gray-300 flex flex-col fixed inset-y-0 right-0 z-40 transform translate-x-full transition-transform duration-300 md:static md:translate-x-0 md:transition-none">
-            <div class="h-16 flex items-center justify-center border-b border-white/5">
-                <h1 class="text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
+        <!-- القائمة الجانبية: أيقونات فقط بالجوال، ونص كامل بالشاشات الكبيرة -->
+        <aside id="appSidebar" class="w-16 md:w-64 glass text-gray-300 flex flex-col shrink-0 transition-all duration-300">
+            <div class="h-16 flex items-center justify-center border-b border-white/5 px-2">
+                <i class="fas fa-store text-blue-400 text-xl md:hidden"></i>
+                <h1 class="hidden md:block text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
             </div>
-            <nav class="flex-1 px-4 py-6 space-y-2">
-                <a data-view="home" class="sidebar-link active flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-home ml-3"></i> الرئيسية
+            <nav class="flex-1 px-2 md:px-4 py-6 space-y-2">
+                <a data-view="home" title="الرئيسية" class="sidebar-link active flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
+                    <i class="fas fa-home md:ml-3 text-lg md:text-base"></i>
+                    <span class="hidden md:inline">الرئيسية</span>
                 </a>
-                <a data-view="products" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-box ml-3"></i> المنتجات
+                <a data-view="products" title="المنتجات" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
+                    <i class="fas fa-box md:ml-3 text-lg md:text-base"></i>
+                    <span class="hidden md:inline">المنتجات</span>
                 </a>
-                <a data-view="orders" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-shopping-cart ml-3"></i> الطلبات
+                <a data-view="orders" title="الطلبات" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
+                    <i class="fas fa-shopping-cart md:ml-3 text-lg md:text-base"></i>
+                    <span class="hidden md:inline">الطلبات</span>
                 </a>
-                <a data-view="customers" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-users ml-3"></i> العملاء
+                <a data-view="customers" title="العملاء" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
+                    <i class="fas fa-users md:ml-3 text-lg md:text-base"></i>
+                    <span class="hidden md:inline">العملاء</span>
                 </a>
-                <a data-view="settings" class="sidebar-link owner-only flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-cog ml-3"></i> الإعدادات
+                <a data-view="settings" title="الإعدادات" class="sidebar-link owner-only flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
+                    <i class="fas fa-cog md:ml-3 text-lg md:text-base"></i>
+                    <span class="hidden md:inline">الإعدادات</span>
                 </a>
             </nav>
         </aside>
@@ -408,9 +411,6 @@
             <!-- الشريط العلوي -->
             <header class="h-16 glass flex items-center justify-between px-4 md:px-6">
                 <div class="flex items-center gap-3 min-w-0">
-                    <button id="sidebarToggle" class="md:hidden text-gray-300 hover:text-white text-lg shrink-0" title="القائمة">
-                        <i class="fas fa-bars"></i>
-                    </button>
                     <div class="text-white text-lg font-semibold truncate" id="pageTitle">نظرة عامة</div>
                 </div>
                 <div class="flex items-center space-x-3 sm:space-x-4 space-x-reverse shrink-0">
@@ -765,32 +765,8 @@
             pageTitle.textContent = titles[name] || '';
         }
         links.forEach(link => {
-            link.addEventListener('click', () => {
-                showView(link.dataset.view);
-                closeSidebar(); // بالجوال، نسكر القائمة تلقائياً بعد اختيار صفحة
-            });
+            link.addEventListener('click', () => showView(link.dataset.view));
         });
-
-        // ------- القائمة الجانبية بوضع الجوال -------
-        const appSidebar = document.getElementById('appSidebar');
-        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-        const sidebarToggle = document.getElementById('sidebarToggle');
-
-        function openSidebar(){
-            appSidebar.classList.remove('translate-x-full');
-            appSidebar.classList.add('translate-x-0');
-            sidebarBackdrop.classList.remove('hidden');
-        }
-        function closeSidebar(){
-            appSidebar.classList.add('translate-x-full');
-            appSidebar.classList.remove('translate-x-0');
-            sidebarBackdrop.classList.add('hidden');
-        }
-        sidebarToggle.addEventListener('click', () => {
-            if(appSidebar.classList.contains('translate-x-full')) openSidebar();
-            else closeSidebar();
-        });
-        sidebarBackdrop.addEventListener('click', closeSidebar);
 
         // ------- إدارة المنتجات -------
         const STORAGE_KEY = 'store_products';
