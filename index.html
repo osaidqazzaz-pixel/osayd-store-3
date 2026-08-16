@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- استدعاء مكتبة الأيقونات -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- بوابة PayPal (تدعم PayPal وأيضًا الدفع ببطاقة ائتمان/مدى كضيف بدون حساب) -->
+    <!-- بدّل YOUR_PAYPAL_CLIENT_ID بالـ Client ID الحقيقي من حساب PayPal Business تبعك -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD&components=buttons&enable-funding=card"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
 
@@ -30,8 +33,8 @@
             inset: 0;
             z-index: 0;
             background-image:
-                linear-gradient(rgba(33,150,255,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(33,150,255,0.06) 1px, transparent 1px);
+                linear-gradient(rgba(var(--glow),0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--glow),0.06) 1px, transparent 1px);
             background-size: 42px 42px;
             mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 75%);
             -webkit-mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 75%);
@@ -47,7 +50,7 @@
         .bg-orb-1{
             width: 480px; height: 480px;
             top: -120px; right: -100px;
-            background: rgba(33,150,255,0.25);
+            background: rgba(var(--glow),0.25);
             animation: float1 14s ease-in-out infinite;
         }
         .bg-orb-2{
@@ -70,7 +73,7 @@
             top: 0; left: 0;
             width: 480px; height: 480px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(33,150,255,0.18) 0%, rgba(33,150,255,0.06) 35%, transparent 70%);
+            background: radial-gradient(circle, rgba(var(--glow),0.18) 0%, rgba(var(--glow),0.06) 35%, transparent 70%);
             pointer-events: none;
             z-index: 1;
             transform: translate(-50%, -50%);
@@ -83,12 +86,12 @@
             background: linear-gradient(180deg, rgba(17,24,39,0.75), rgba(10,14,24,0.75));
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(33,150,255,0.15);
+            border: 1px solid rgba(var(--glow),0.15);
             box-shadow: 0 0 0 1px rgba(255,255,255,0.02) inset, 0 10px 30px rgba(0,0,0,0.45);
         }
         .glass:hover{
-            border-color: rgba(33,150,255,0.4);
-            box-shadow: 0 0 25px rgba(33,150,255,0.15), 0 10px 30px rgba(0,0,0,0.5);
+            border-color: rgba(var(--glow),0.4);
+            box-shadow: 0 0 25px rgba(var(--glow),0.15), 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .tilt-card{
@@ -99,7 +102,7 @@
             position:absolute;
             inset:0;
             border-radius: inherit;
-            background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(33,150,255,0.18), transparent 60%);
+            background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(var(--glow),0.18), transparent 60%);
             opacity: 0;
             transition: opacity .3s ease;
             pointer-events: none;
@@ -112,18 +115,18 @@
             transition: background .2s ease, color .2s ease;
         }
         .sidebar-link:hover{
-            background: rgba(33,150,255,0.12);
+            background: rgba(var(--glow),0.12);
             color: #fff;
         }
         .sidebar-link.active{
-            background: linear-gradient(90deg, rgba(33,150,255,0.35), rgba(33,150,255,0.05));
-            box-shadow: inset 3px 0 0 0 rgb(33,150,255);
+            background: linear-gradient(90deg, rgba(var(--glow),0.35), rgba(var(--glow),0.05));
+            box-shadow: inset 3px 0 0 0 rgb(var(--glow));
             color: #fff;
         }
-        .sidebar-link.active i{ color: #60a5fa; }
+        .sidebar-link.active i{ color: rgb(var(--glow)); }
 
         .glow-text{
-            text-shadow: 0 0 14px rgba(33,150,255,0.45);
+            text-shadow: 0 0 14px rgba(var(--glow),0.45);
         }
 
         .badge-success{
@@ -137,9 +140,9 @@
             border: 1px solid rgba(234,179,8,0.3);
         }
         .badge-stock{
-            background: rgba(59,130,246,0.12);
-            color: #60a5fa;
-            border: 1px solid rgba(59,130,246,0.3);
+            background: rgba(var(--glow),0.12);
+            color: rgb(var(--glow));
+            border: 1px solid rgba(var(--glow),0.3);
         }
         .badge-outofstock{
             background: rgba(239,68,68,0.12);
@@ -149,15 +152,15 @@
 
         ::-webkit-scrollbar{ width: 8px; height: 8px; }
         ::-webkit-scrollbar-track{ background: transparent; }
-        ::-webkit-scrollbar-thumb{ background: rgba(33,150,255,0.35); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover{ background: rgba(33,150,255,0.55); }
+        ::-webkit-scrollbar-thumb{ background: rgba(var(--glow),0.35); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover{ background: rgba(var(--glow),0.55); }
 
         table thead th{ color: #8ea0bd; font-weight: 500; }
         table tbody tr{ border-color: rgba(255,255,255,0.06); }
-        table tbody tr:hover{ background: rgba(33,150,255,0.06); }
+        table tbody tr:hover{ background: rgba(var(--glow),0.06); }
 
         .btn-primary{
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            background: linear-gradient(135deg, rgb(var(--glow)), #4f46e5);
             box-shadow: 0 0 20px rgba(37,99,235,0.35);
             transition: transform .15s ease, box-shadow .2s ease;
         }
@@ -179,14 +182,11 @@
             backdrop-filter: blur(4px);
             display: none;
             align-items: center; justify-content: center;
-            padding: 1rem;
             z-index: 50;
         }
         .modal-backdrop.active{ display: flex; }
         .modal-box{
             width: 100%; max-width: 440px;
-            max-height: 90vh;
-            overflow-y: auto;
             animation: fadeIn .2s ease;
         }
         input.field, select.field{
@@ -197,8 +197,8 @@
         }
         input.field:focus, select.field:focus{
             outline: none;
-            border-color: rgba(59,130,246,0.6);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+            border-color: rgba(var(--glow),0.6);
+            box-shadow: 0 0 0 3px rgba(var(--glow),0.15);
         }
 
         .icon-btn{
@@ -215,13 +215,13 @@
         }
         .product-card:hover{
             transform: translateY(-6px);
-            border-color: rgba(33,150,255,0.5);
-            box-shadow: 0 0 30px rgba(33,150,255,0.2), 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(var(--glow),0.5);
+            box-shadow: 0 0 30px rgba(var(--glow),0.2), 0 20px 40px rgba(0,0,0,0.5);
         }
         .product-card-media{
             position: relative;
             aspect-ratio: 1 / 1;
-            background: linear-gradient(145deg, rgba(33,150,255,0.08), rgba(120,90,255,0.05));
+            background: linear-gradient(145deg, rgba(var(--glow),0.08), rgba(120,90,255,0.05));
             overflow: hidden;
         }
         .product-card-media img{
@@ -293,7 +293,7 @@
             color: #9ca3af;
         }
         .auth-tab.active{
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            background: linear-gradient(135deg, rgb(var(--glow)), #4f46e5);
             color: #fff;
             box-shadow: 0 0 15px rgba(37,99,235,0.35);
         }
@@ -303,8 +303,8 @@
             transition: background .15s ease, border-color .15s ease;
         }
         .authorized-row:hover{
-            background: rgba(33,150,255,0.06);
-            border-color: rgba(33,150,255,0.3);
+            background: rgba(var(--glow),0.06);
+            border-color: rgba(var(--glow),0.3);
         }
 
         @media (prefers-reduced-motion: reduce){
@@ -375,32 +375,26 @@
     <div id="dashboardScreen" class="hidden">
     <div class="flex h-screen overflow-hidden relative z-10">
 
-        <!-- القائمة الجانبية: أيقونات فقط بالجوال، ونص كامل بالشاشات الكبيرة -->
-        <aside id="appSidebar" class="w-16 md:w-64 glass text-gray-300 flex flex-col shrink-0 transition-all duration-300">
-            <div class="h-16 flex items-center justify-center border-b border-white/5 px-2">
-                <i class="fas fa-store text-blue-400 text-xl md:hidden"></i>
-                <h1 class="hidden md:block text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
+        <!-- القائمة الجانبية -->
+        <aside class="w-64 glass text-gray-300 flex flex-col">
+            <div class="h-16 flex items-center justify-center border-b border-white/5">
+                <h1 class="text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
             </div>
-            <nav class="flex-1 px-2 md:px-4 py-6 space-y-2">
-                <a data-view="home" title="الرئيسية" class="sidebar-link active flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
-                    <i class="fas fa-home md:ml-3 text-lg md:text-base"></i>
-                    <span class="hidden md:inline">الرئيسية</span>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a data-view="home" class="sidebar-link active flex items-center px-4 py-2 rounded-lg">
+                    <i class="fas fa-home ml-3"></i> الرئيسية
                 </a>
-                <a data-view="products" title="المنتجات" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
-                    <i class="fas fa-box md:ml-3 text-lg md:text-base"></i>
-                    <span class="hidden md:inline">المنتجات</span>
+                <a data-view="products" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
+                    <i class="fas fa-box ml-3"></i> المنتجات
                 </a>
-                <a data-view="orders" title="الطلبات" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
-                    <i class="fas fa-shopping-cart md:ml-3 text-lg md:text-base"></i>
-                    <span class="hidden md:inline">الطلبات</span>
+                <a data-view="orders" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
+                    <i class="fas fa-shopping-cart ml-3"></i> الطلبات
                 </a>
-                <a data-view="customers" title="العملاء" class="sidebar-link flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
-                    <i class="fas fa-users md:ml-3 text-lg md:text-base"></i>
-                    <span class="hidden md:inline">العملاء</span>
+                <a data-view="customers" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
+                    <i class="fas fa-users ml-3"></i> العملاء
                 </a>
-                <a data-view="settings" title="الإعدادات" class="sidebar-link owner-only flex items-center justify-center md:justify-start px-2 md:px-4 py-2.5 rounded-lg">
-                    <i class="fas fa-cog md:ml-3 text-lg md:text-base"></i>
-                    <span class="hidden md:inline">الإعدادات</span>
+                <a data-view="settings" class="sidebar-link owner-only flex items-center px-4 py-2 rounded-lg">
+                    <i class="fas fa-cog ml-3"></i> الإعدادات
                 </a>
             </nav>
         </aside>
@@ -409,25 +403,23 @@
         <main class="flex-1 flex flex-col overflow-y-auto">
 
             <!-- الشريط العلوي -->
-            <header class="h-16 glass flex items-center justify-between px-4 md:px-6">
-                <div class="flex items-center gap-3 min-w-0">
-                    <div class="text-white text-lg font-semibold truncate" id="pageTitle">نظرة عامة</div>
-                </div>
-                <div class="flex items-center space-x-3 sm:space-x-4 space-x-reverse shrink-0">
+            <header class="h-16 glass flex items-center justify-between px-6">
+                <div class="text-white text-lg font-semibold" id="pageTitle">نظرة عامة</div>
+                <div class="flex items-center space-x-4 space-x-reverse">
                     <button class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fas fa-bell"></i></button>
                     <button id="dashboardLogout" class="text-gray-400 hover:text-red-400 transition-colors" title="تسجيل الخروج">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                     <div class="flex items-center gap-2.5">
                         <span class="text-sm text-gray-300 hidden sm:inline" id="currentUserName">المالك</span>
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(33,150,255,0.5)] shrink-0">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(var(--glow),0.5)]">
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div class="p-4 md:p-6">
+            <div class="p-6">
 
                 <!-- ============ صفحة الرئيسية ============ -->
                 <section id="view-home" class="view active">
@@ -518,6 +510,7 @@
                                         <th class="pb-3 px-4">العميل</th>
                                         <th class="pb-3 px-4">التاريخ</th>
                                         <th class="pb-3 px-4">المبلغ</th>
+                                        <th class="pb-3 px-4">طريقة الدفع</th>
                                         <th class="pb-3 px-4">الحالة</th>
                                         <th class="pb-3 px-4">إجراءات</th>
                                     </tr>
@@ -582,6 +575,33 @@
                     <div class="mb-6">
                         <h2 class="text-xl font-bold text-white">الإعدادات</h2>
                         <p class="text-gray-400 text-sm mt-1">إدارة صلاحيات الدخول للوحة التحكم</p>
+                    </div>
+
+                    <div class="glass rounded-lg p-6 max-w-xl mb-6">
+                        <h3 class="text-white font-semibold mb-1">شكل ولون المتجر</h3>
+                        <p class="text-gray-400 text-sm mb-5">غيّر اللون الرئيسي (لون الإضاءة والأزرار والتفاصيل) — التغيير بيظهر فورًا لكل زوار الموقع.</p>
+
+                        <div class="flex items-center gap-4 mb-5">
+                            <input type="color" id="themeColorPicker" value="#2196ff" class="w-14 h-14 rounded-lg border border-white/10 bg-transparent cursor-pointer p-0">
+                            <div class="flex-1">
+                                <div class="text-gray-300 text-sm mb-1">اللون الرئيسي</div>
+                                <div class="text-gray-500 text-xs" id="themeColorValue">#2196ff</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <button type="button" data-color="#2196ff" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#2196ff" title="أزرق"></button>
+                            <button type="button" data-color="#7c3aed" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#7c3aed" title="بنفسجي"></button>
+                            <button type="button" data-color="#22c55e" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#22c55e" title="أخضر"></button>
+                            <button type="button" data-color="#f59e0b" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#f59e0b" title="برتقالي"></button>
+                            <button type="button" data-color="#ec4899" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#ec4899" title="وردي"></button>
+                            <button type="button" data-color="#ef4444" class="theme-swatch w-8 h-8 rounded-full border-2 border-white/20" style="background:#ef4444" title="أحمر"></button>
+                        </div>
+
+                        <button type="button" id="saveThemeColor" class="btn-primary text-white px-5 py-2.5 rounded-lg text-sm font-medium">
+                            <i class="fas fa-check ml-1.5"></i> حفظ اللون
+                        </button>
+                        <span id="themeSaveStatus" class="text-green-400 text-sm mr-3 hidden"><i class="fas fa-check-circle"></i> تم الحفظ</span>
                     </div>
 
                     <div class="glass rounded-lg p-6 max-w-xl">
@@ -726,7 +746,113 @@
         </div>
     </div>
 
-    <script>
+    <!-- نافذة الشراء: اختيار طريقة الدفع بعد الضغط على "اشتري الآن" -->
+    <div class="modal-backdrop" id="checkoutModal">
+        <div class="modal-box glass rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-white">إتمام الطلب</h3>
+                <button id="closeCheckout" class="text-gray-400 hover:text-white icon-btn"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="glass rounded-lg p-3 flex items-center gap-3 mb-4">
+                <div id="coProductImageWrap" class="w-14 h-14 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center shrink-0 border border-white/10">
+                    <i class="fas fa-image text-gray-600" id="coProductNoImage"></i>
+                    <img id="coProductImage" class="hidden w-full h-full object-cover" alt="">
+                </div>
+                <div class="min-w-0">
+                    <div id="coProductName" class="text-white font-semibold truncate"></div>
+                    <div id="coProductPrice" class="text-blue-400 text-sm glow-text"></div>
+                </div>
+            </div>
+
+            <form id="checkoutForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1.5">الكمية</label>
+                    <input type="number" id="coQty" min="1" value="1" required class="field w-full rounded-lg px-4 py-2.5">
+                    <div id="coQtyHint" class="text-xs text-gray-500 mt-1"></div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">طريقة الدفع</label>
+                    <div class="space-y-2">
+                        <label class="payment-option flex items-center gap-3 border border-white/10 rounded-lg px-4 py-2.5 cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="cod" checked class="accent-blue-500">
+                            <i class="fas fa-hand-holding-dollar text-green-400"></i>
+                            <span class="text-gray-200 text-sm">الدفع نقدًا عند الاستلام</span>
+                        </label>
+                        <label class="payment-option flex items-center gap-3 border border-white/10 rounded-lg px-4 py-2.5 cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="bank_transfer" class="accent-blue-500">
+                            <i class="fas fa-building-columns text-blue-400"></i>
+                            <span class="text-gray-200 text-sm">تحويل بنكي</span>
+                        </label>
+                        <label class="payment-option flex items-center gap-3 border border-white/10 rounded-lg px-4 py-2.5 cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="paypal" class="accent-blue-500">
+                            <i class="fab fa-paypal text-blue-400"></i>
+                            <span class="text-gray-200 text-sm">PayPal</span>
+                        </label>
+                        <label class="payment-option flex items-center gap-3 border border-white/10 rounded-lg px-4 py-2.5 cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="credit_card" class="accent-blue-500">
+                            <i class="fas fa-credit-card text-indigo-400"></i>
+                            <span class="text-gray-200 text-sm">بطاقة ائتمان / مدى</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- تعليمات تظهر حسب طريقة الدفع المختارة -->
+                <div id="coInstructions" class="text-xs text-gray-400 bg-white/5 border border-white/10 rounded-lg p-3 leading-relaxed"></div>
+
+                <div class="flex items-center justify-between border-t border-white/10 pt-3">
+                    <span class="text-gray-400 text-sm">الإجمالي</span>
+                    <span id="coTotal" class="text-white font-bold text-lg"></span>
+                </div>
+
+                <!-- حاوية أزرار PayPal / البطاقة — تظهر بدل زر "تأكيد الطلب" العادي عند اختيار دفع إلكتروني -->
+                <div id="paypalButtonContainer" class="hidden min-h-[45px]"></div>
+                <div id="cardButtonContainer" class="hidden min-h-[45px]"></div>
+                <div id="paypalLoadError" class="hidden text-red-400 text-xs"></div>
+
+                <div class="flex gap-3 pt-1" id="checkoutManualActions">
+                    <button type="submit" id="checkoutSubmitBtn" class="btn-primary text-white flex-1 py-2.5 rounded-lg font-medium">تأكيد الطلب</button>
+                    <button type="button" id="cancelCheckout" class="flex-1 py-2.5 rounded-lg border border-white/10 text-gray-300 hover:bg-white/5 transition-colors">إلغاء</button>
+                </div>
+                <button type="button" id="cancelCheckoutOnline" class="hidden w-full py-2.5 rounded-lg border border-white/10 text-gray-300 hover:bg-white/5 transition-colors">إلغاء</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // ==================================================================
+        // Firebase — قاعدة بيانات سحابية مشتركة بين كل زوار الموقع
+        // ==================================================================
+        // خطوات لازم تعملها قبل النشر (بالتفصيل بآخر الرد):
+        // 1) أنشئ مشروع مجاني على https://console.firebase.google.com
+        // 2) فعّل Firestore Database و Authentication (Email/Password)
+        // 3) انسخ إعدادات مشروعك وحطها هون بدل القيم الوهمية
+        // 4) الصق Security Rules المرفقة بالرد داخل تبويب Firestore Rules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
+            setDoc, getDoc, onSnapshot, increment, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import {
+            getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+            onAuthStateChanged, signOut, updateProfile, sendEmailVerification
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // ------- إعدادات مشروعك (بدّلها بإعداداتك من Firebase Console) -------
+       const firebaseConfig = {
+            apiKey: "AIzaSyBuyWszcQ0h4rsAFVNKgdpTwvWaeM7Ak2Y",
+            authDomain: "osayd-store-8d936.firebaseapp.com",
+            projectId: "osayd-store-8d936",
+            storageBucket: "osayd-store-8d936.firebasestorage.app",
+            messagingSenderId: "460037479005",
+            appId: "1:460037479005:web:1c36066067202c34830bb4"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const OWNER_EMAIL = 'osaidqazzaz@gmail.com';
+
         // ------- حالة الصلاحية الحالية (مالك أم زبون) -------
         let IS_OWNER = false;
 
@@ -757,7 +883,6 @@
         const pageTitle = document.getElementById('pageTitle');
 
         function showView(name){
-            // الزبون ما إله صلاحية دخول صفحة الإعدادات حتى لو حاول يتلاعب بالرابط
             if(name === 'settings' && !IS_OWNER){ name = 'home'; }
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById('view-' + name).classList.add('active');
@@ -768,32 +893,24 @@
             link.addEventListener('click', () => showView(link.dataset.view));
         });
 
-        // ------- إدارة المنتجات -------
-        const STORAGE_KEY = 'store_products';
-        let products = [];
+        function escapeHtml(str){
+            const div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
+        }
 
-        function loadProducts(){
-            try{
-                const raw = localStorage.getItem(STORAGE_KEY);
-                products = raw ? JSON.parse(raw) : defaultProducts();
-            }catch(e){
-                products = defaultProducts();
-            }
-        }
-        function saveProducts(){
-            try{
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-                return true;
-            }catch(e){
-                alert('تعذر حفظ المنتج — مساحة التخزين بالمتصفح ممتلئة. جرب صورة أصغر أو احذف منتجًا قديمًا.');
-                return false;
-            }
-        }
-        function defaultProducts(){
-            return [
-                { id: crypto.randomUUID(), name: 'قميص قطني', category: 'ملابس', price: 89, qty: 24, image: '' },
-                { id: crypto.randomUUID(), name: 'سماعة لاسلكية', category: 'إلكترونيات', price: 199, qty: 0, image: '' }
-            ];
+        // ==================================================================
+        // المنتجات — مزامنة حية عبر Firestore (كل زائر شايف نفس البيانات)
+        // ==================================================================
+        let products = [];
+        let unsubProducts = null;
+
+        function startProductsListener(){
+            if(unsubProducts) unsubProducts();
+            unsubProducts = onSnapshot(collection(db, 'products'), (snap) => {
+                products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderProducts();
+            }, (err) => console.error('products listener error:', err));
         }
 
         const productsGrid = document.getElementById('productsGrid');
@@ -831,6 +948,9 @@
                             <span class="text-blue-400 font-bold glow-text">$${Number(p.price).toFixed(2)}</span>
                             <span class="text-gray-400 text-sm">الكمية: ${p.qty}</span>
                         </div>
+                        <button data-id="${p.id}" class="buy-now-btn btn-primary text-white w-full py-2 rounded-lg text-sm font-medium mt-3 ${inStock ? '' : 'opacity-40 cursor-not-allowed'}" ${inStock ? '' : 'disabled'}>
+                            <i class="fas fa-bag-shopping ml-1.5"></i> ${inStock ? 'اشتري الآن' : 'نفدت الكمية'}
+                        </button>
                     </div>
                 `;
                 productsGrid.appendChild(card);
@@ -838,18 +958,21 @@
             homeProductCount.textContent = products.length;
 
             document.querySelectorAll('.delete-product').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    products = products.filter(p => p.id !== btn.dataset.id);
-                    saveProducts();
-                    renderProducts();
+                btn.addEventListener('click', async () => {
+                    if(!confirm('هل تريد حذف هذا المنتج؟')) return;
+                    try{
+                        await deleteDoc(doc(db, 'products', btn.dataset.id));
+                    }catch(err){
+                        alert('تعذر حذف المنتج: ' + (err.message || 'خطأ غير معروف'));
+                    }
                 });
             });
-        }
-
-        function escapeHtml(str){
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
+            document.querySelectorAll('.buy-now-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const product = products.find(p => p.id === btn.dataset.id);
+                    if(product) openCheckout(product);
+                });
+            });
         }
 
         // ------- نافذة إضافة منتج -------
@@ -900,7 +1023,7 @@
                 reader.onload = () => {
                     const img = new Image();
                     img.onload = () => {
-                        // تصغير الصورة لأبعاد معقولة وضغطها لتفادي امتلاء مساحة التخزين المحلي
+                        // تصغير الصورة لأبعاد معقولة وضغطها لتفادي تجاوز حد حجم مستند Firestore
                         const maxDim = 700;
                         let { width, height } = img;
                         if(width > maxDim || height > maxDim){
@@ -964,58 +1087,268 @@
 
             await pImageReadyPromise; // ننتظر خلوص معالجة الصورة قبل أي حفظ
 
-            const newProduct = {
-                id: crypto.randomUUID(),
-                name: document.getElementById('pName').value.trim(),
-                price: parseFloat(document.getElementById('pPrice').value) || 0,
-                qty: parseInt(document.getElementById('pQty').value) || 0,
-                category: document.getElementById('pCategory').value.trim(),
-                image: pImageData
-            };
-            if(!newProduct.name){
+            const name = document.getElementById('pName').value.trim();
+            if(!name){
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalLabel;
                 return;
             }
-            products.unshift(newProduct);
-            const saved = saveProducts();
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalLabel;
-            if(!saved){
-                products.shift(); // تراجع عن الإضافة لأن الحفظ فشل
-                return;
+            try{
+                await addDoc(collection(db, 'products'), {
+                    name,
+                    price: parseFloat(document.getElementById('pPrice').value) || 0,
+                    qty: parseInt(document.getElementById('pQty').value) || 0,
+                    category: document.getElementById('pCategory').value.trim(),
+                    image: pImageData,
+                    createdAt: serverTimestamp()
+                });
+                closeModal();
+                showView('products');
+            }catch(err){
+                alert('تعذر حفظ المنتج: ' + (err.message || 'تحقق من اتصالك بالإنترنت.'));
+            }finally{
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalLabel;
             }
-            renderProducts();
-            closeModal();
-            showView('products');
         });
 
-        // ------- إدارة العملاء -------
-        const CUSTOMERS_STORAGE_KEY = 'store_customers';
-        let customers = [];
-        let customerSearchTerm = '';
+        // ==================================================================
+        // نافذة الشراء وطرق الدفع
+        // ==================================================================
+        // ملاحظة أمان مهمة: "الدفع عند الاستلام"، "تحويل بنكي" و"محفظة إلكترونية"
+        // كلها طرق يدوية — الموقع ما بيجمع ولا بيخزّن أي بيانات دفع حساسة
+        // إطلاقًا، والدفع الفعلي بيصير خارج الموقع، والطلب هون بس بيسجّل نية
+        // الشراء ليتابعها صاحب المتجر. أما "PayPal" و"بطاقة ائتمان" فبتعتمد
+        // على أزرار PayPal الرسمية (SDK)، يعني الدفع الفعلي بيصير على خوادم
+        // PayPal مباشرة ولا يلمس موقعك أي رقم بطاقة.
+        //
+        // بدّل المعلومات هون بمعلوماتك الحقيقية (رقم الآيبان، رقم المحفظة):
+        const STORE_PAYMENT_INFO = {
+            bank_transfer: 'حوّل المبلغ إلى: بنك فلسطين — اسم الحساب: [اسم صاحب المتجر] — رقم الآيبان: [PSXX XXXX XXXX XXXX XXXX XXXX X]. بعد التحويل أرسل صورة الإشعار لتأكيد الطلب.',
+            wallet: 'حوّل المبلغ عبر محفظتك الإلكترونية (PalPay / Jawwal Pay / Reflect) إلى رقم المحفظة: [09XXXXXXXX]. المبلغ رح يوصلك مباشرة وبتقدر تسحبه لبطاقتك أو حسابك البنكي وقت ما بدك من نفس تطبيق المحفظة.',
+            cod: 'رح تدفع المبلغ نقدًا لمندوب التوصيل عند استلام الطلب مباشرة.',
+            paypal: 'رح تدفع بأمان عبر PayPal — المبلغ بينزل بحساب PayPal تبعك وتقدر تسحبه لبطاقتك وقت ما بدك.',
+            credit_card: 'ادفع مباشرة ببطاقة الائتمان أو مدى عبر بوابة PayPal الآمنة (بدون الحاجة لحساب PayPal).'
+        };
+        const paymentMethodMeta = {
+            cod: { label: 'الدفع عند الاستلام', icon: 'fa-hand-holding-dollar' },
+            bank_transfer: { label: 'تحويل بنكي', icon: 'fa-building-columns' },
+            wallet: { label: 'محفظة إلكترونية', icon: 'fa-wallet' },
+            paypal: { label: 'PayPal', icon: 'fa-paypal' },
+            credit_card: { label: 'بطاقة ائتمان', icon: 'fa-credit-card' }
+        };
+        // الطرق التي تُدار يدويًا (زر "تأكيد الطلب" العادي، الطلب يُسجَّل كـ"قيد المعالجة")
+        const MANUAL_METHODS = ['cod', 'bank_transfer', 'wallet'];
+        // الطرق التي تمر عبر بوابة PayPal (الطلب يُسجَّل "مكتمل" فور نجاح الدفع فعليًا)
+        const ONLINE_METHODS = ['paypal', 'credit_card'];
 
-        function loadCustomers(){
+        const checkoutModal = document.getElementById('checkoutModal');
+        const checkoutForm = document.getElementById('checkoutForm');
+        const checkoutManualActions = document.getElementById('checkoutManualActions');
+        const paypalButtonContainer = document.getElementById('paypalButtonContainer');
+        const cardButtonContainer = document.getElementById('cardButtonContainer');
+        const paypalLoadError = document.getElementById('paypalLoadError');
+        const cancelCheckoutOnline = document.getElementById('cancelCheckoutOnline');
+        let checkoutProduct = null;
+        let paypalButtonsInstance = null;
+        let cardButtonsInstance = null;
+
+        function updateCheckoutInstructions(){
+            const selected = checkoutForm.querySelector('input[name="paymentMethod"]:checked').value;
+            document.getElementById('coInstructions').textContent = STORE_PAYMENT_INFO[selected] || '';
+            toggleCheckoutMode(selected);
+        }
+        function updateCheckoutTotal(){
+            if(!checkoutProduct) return;
+            const qtyInput = document.getElementById('coQty');
+            let qty = parseInt(qtyInput.value, 10) || 1;
+            const maxQty = Number(checkoutProduct.qty) || 0;
+            if(qty > maxQty) qty = maxQty;
+            if(qty < 1) qty = 1;
+            qtyInput.value = qty;
+            document.getElementById('coTotal').textContent = '$' + (qty * Number(checkoutProduct.price)).toFixed(2);
+            // إذا كانت طريقة دفع أونلاين مفعّلة، لازم نعيد رسم أزرار PayPal بالمبلغ الجديد
+            const selected = checkoutForm.querySelector('input[name="paymentMethod"]:checked').value;
+            if(ONLINE_METHODS.includes(selected)) renderPaypalButtons(selected);
+        }
+
+        // يبدّل بين زر "تأكيد الطلب" العادي وأزرار الدفع الإلكتروني حسب الطريقة المختارة
+        function toggleCheckoutMode(method){
+            const isOnline = ONLINE_METHODS.includes(method);
+            checkoutManualActions.classList.toggle('hidden', isOnline);
+            cancelCheckoutOnline.classList.toggle('hidden', !isOnline);
+            paypalButtonContainer.classList.toggle('hidden', method !== 'paypal');
+            cardButtonContainer.classList.toggle('hidden', method !== 'credit_card');
+            paypalLoadError.classList.add('hidden');
+            if(isOnline) renderPaypalButtons(method);
+        }
+
+        // يرسم زر PayPal (أو زر البطاقة) بالمبلغ الحالي — لازم يُعاد الرسم كل مرة يتغيّر فيها المبلغ
+        function renderPaypalButtons(method){
+            if(typeof window.paypal === 'undefined'){
+                paypalLoadError.textContent = 'تعذر تحميل بوابة PayPal — تأكد من إضافة Client ID الصحيح بالكود وإنك متصل بالإنترنت.';
+                paypalLoadError.classList.remove('hidden');
+                return;
+            }
+            if(!checkoutProduct) return;
+            const container = method === 'credit_card' ? cardButtonContainer : paypalButtonContainer;
+            container.innerHTML = '';
+
+            const buttonConfig = {
+                style: { layout: 'vertical', shape: 'rect', label: method === 'credit_card' ? 'pay' : 'paypal' },
+                createOrder: (data, actions) => {
+                    const qty = parseInt(document.getElementById('coQty').value, 10) || 1;
+                    const amount = (qty * Number(checkoutProduct.price)).toFixed(2);
+                    return actions.order.create({
+                        purchase_units: [{ amount: { value: amount, currency_code: 'USD' } }]
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    try{
+                        const details = await actions.order.capture();
+                        await finalizeOrder(method, details.id, 'completed');
+                    }catch(err){
+                        alert('تم الدفع لكن حصل خطأ بتسجيل الطلب، تواصل معنا فورًا مع رقم العملية: ' + data.orderID);
+                    }
+                },
+                onError: () => {
+                    alert('حدث خطأ أثناء معالجة الدفع، حاول مرة أخرى.');
+                },
+                onCancel: () => { /* المستخدم ألغى نافذة الدفع، ما في داعي لأي إجراء */ }
+            };
+            if(method === 'credit_card'){
+                buttonConfig.fundingSource = window.paypal.FUNDING.CARD;
+            }
             try{
-                const raw = localStorage.getItem(CUSTOMERS_STORAGE_KEY);
-                customers = raw ? JSON.parse(raw) : defaultCustomers();
-            }catch(e){
-                customers = defaultCustomers();
+                const buttons = window.paypal.Buttons(buttonConfig);
+                buttons.render(container);
+                if(method === 'credit_card') cardButtonsInstance = buttons; else paypalButtonsInstance = buttons;
+            }catch(err){
+                paypalLoadError.textContent = 'تعذر عرض زر الدفع، حدّث الصفحة وحاول مرة أخرى.';
+                paypalLoadError.classList.remove('hidden');
             }
         }
-        function saveCustomers(){
-            try{ localStorage.setItem(CUSTOMERS_STORAGE_KEY, JSON.stringify(customers)); }catch(e){}
+
+        // منطق مشترك لإنشاء الطلب في Firestore وإنقاص المخزون — يُستدعى من الدفع
+        // اليدوي (نقدي/تحويل/محفظة) ومن نجاح الدفع عبر PayPal
+        async function finalizeOrder(paymentMethod, transactionId, status){
+            const product = products.find(p => p.id === checkoutProduct.id);
+            if(!product) throw new Error('المنتج لم يعد متوفرًا');
+            const user = auth.currentUser;
+            const qty = Math.min(parseInt(document.getElementById('coQty').value, 10) || 1, Number(product.qty));
+            const orderNumber = nextOrderNumber();
+
+            await addDoc(collection(db, 'orders'), {
+                number: orderNumber,
+                customerName: user.displayName || user.email,
+                customerEmail: user.email,
+                productName: product.name,
+                qty,
+                amount: qty * Number(product.price),
+                date: new Date().toISOString().slice(0, 10),
+                status,
+                paymentMethod,
+                transactionId: transactionId || '',
+                createdAt: serverTimestamp()
+            });
+            await updateDoc(doc(db, 'products', product.id), { qty: increment(-qty) });
+
+            closeCheckout();
+            showView('orders');
+            alert('تم استلام طلبك! رقم الطلب: ' + orderNumber + (status === 'completed' ? ' — تم الدفع بنجاح ✅' : ' — ' + (STORE_PAYMENT_INFO[paymentMethod] || '')));
         }
-        function defaultCustomers(){
-            return [
-                { id: crypto.randomUUID(), name: 'أحمد محمد', phone: '0591234567', email: 'ahmad@example.com' },
-                { id: crypto.randomUUID(), name: 'سارة خالد', phone: '0597654321', email: 'sara@example.com' }
-            ];
+
+        function openCheckout(product){
+            if(!Number(product.qty) || Number(product.qty) < 1) return;
+            checkoutProduct = product;
+            document.getElementById('coProductName').textContent = product.name;
+            document.getElementById('coProductPrice').textContent = '$' + Number(product.price).toFixed(2);
+            document.getElementById('coQtyHint').textContent = 'المتوفر بالمخزون: ' + product.qty;
+            const img = document.getElementById('coProductImage');
+            const noImg = document.getElementById('coProductNoImage');
+            if(product.image){
+                img.src = product.image;
+                img.classList.remove('hidden');
+                noImg.classList.add('hidden');
+            }else{
+                img.classList.add('hidden');
+                noImg.classList.remove('hidden');
+            }
+            const qtyInput = document.getElementById('coQty');
+            qtyInput.value = 1;
+            qtyInput.max = product.qty;
+            checkoutForm.querySelector('input[name="paymentMethod"][value="cod"]').checked = true;
+            updateCheckoutInstructions();
+            updateCheckoutTotal();
+            checkoutModal.classList.add('active');
+        }
+        function closeCheckout(){
+            checkoutModal.classList.remove('active');
+            checkoutProduct = null;
+            checkoutForm.reset();
+            paypalButtonContainer.innerHTML = '';
+            cardButtonContainer.innerHTML = '';
+        }
+        document.getElementById('closeCheckout').addEventListener('click', closeCheckout);
+        document.getElementById('cancelCheckout').addEventListener('click', closeCheckout);
+        cancelCheckoutOnline.addEventListener('click', closeCheckout);
+        checkoutModal.addEventListener('click', (e) => { if(e.target === checkoutModal) closeCheckout(); });
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && checkoutModal.classList.contains('active')) closeCheckout(); });
+        document.getElementById('coQty').addEventListener('input', updateCheckoutTotal);
+        checkoutForm.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', updateCheckoutInstructions);
+        });
+
+        // إرسال الطلب يدويًا (نقدي عند الاستلام / تحويل بنكي / محفظة إلكترونية)
+        checkoutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!checkoutProduct) return;
+            const product = products.find(p => p.id === checkoutProduct.id);
+            if(!product) return;
+            const user = auth.currentUser;
+            if(!user){ alert('الرجاء تسجيل الدخول أولاً.'); return; }
+
+            const qty = Math.min(parseInt(document.getElementById('coQty').value, 10) || 1, Number(product.qty));
+            if(qty < 1){
+                alert('الكمية المطلوبة غير متوفرة بالمخزون.');
+                return;
+            }
+            const paymentMethod = checkoutForm.querySelector('input[name="paymentMethod"]:checked').value;
+            if(!MANUAL_METHODS.includes(paymentMethod)) return; // الطرق الإلكترونية بتتم عبر أزرار PayPal مش هالفورم
+
+            const submitBtn = document.getElementById('checkoutSubmitBtn');
+            const originalLabel = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري إرسال الطلب...';
+
+            try{
+                await finalizeOrder(paymentMethod, '', 'pending');
+            }catch(err){
+                alert('تعذر إتمام الطلب: ' + (err.message || 'تحقق من اتصالك بالإنترنت.'));
+            }finally{
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalLabel;
+            }
+        });
+
+        // ==================================================================
+        // العملاء — مزامنة حية عبر Firestore
+        // ==================================================================
+        let customers = [];
+        let customerSearchTerm = '';
+        let unsubCustomers = null;
+
+        function startCustomersListener(){
+            if(unsubCustomers) unsubCustomers();
+            unsubCustomers = onSnapshot(collection(db, 'customers'), (snap) => {
+                customers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderCustomers();
+            }, (err) => console.error('customers listener error:', err));
         }
 
         // يحسب عدد الطلبات وإجمالي الإنفاق (الطلبات المكتملة فقط) لعميل معيّن اعتمادًا على اسمه
         function getCustomerStats(customerName){
-            const matched = orders.filter(o => o.customerName.trim().toLowerCase() === customerName.trim().toLowerCase());
+            const matched = orders.filter(o => (o.customerName || '').trim().toLowerCase() === customerName.trim().toLowerCase());
             const totalSpent = matched
                 .filter(o => o.status === 'completed')
                 .reduce((sum, o) => sum + Number(o.amount || 0), 0);
@@ -1069,10 +1402,13 @@
             homeCustomerCount.textContent = customers.length;
 
             document.querySelectorAll('.delete-customer').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    customers = customers.filter(c => c.id !== btn.dataset.id);
-                    saveCustomers();
-                    renderCustomers();
+                btn.addEventListener('click', async () => {
+                    if(!confirm('هل تريد حذف هذا العميل؟')) return;
+                    try{
+                        await deleteDoc(doc(db, 'customers', btn.dataset.id));
+                    }catch(err){
+                        alert('تعذر حذف العميل: ' + (err.message || 'خطأ غير معروف'));
+                    }
                 });
             });
 
@@ -1109,44 +1445,43 @@
         customerModal.addEventListener('click', (e) => { if(e.target === customerModal) closeCustomerModal(); });
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && customerModal.classList.contains('active')) closeCustomerModal(); });
 
-        customerForm.addEventListener('submit', (e) => {
+        customerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const newCustomer = {
-                id: crypto.randomUUID(),
-                name: document.getElementById('cName').value.trim(),
-                phone: document.getElementById('cPhone').value.trim(),
-                email: document.getElementById('cEmail').value.trim()
-            };
-            if(!newCustomer.name) return;
-            customers.unshift(newCustomer);
-            saveCustomers();
-            renderCustomers();
-            closeCustomerModal();
-            showView('customers');
+            const name = document.getElementById('cName').value.trim();
+            if(!name) return;
+            const submitBtn = customerForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            try{
+                await addDoc(collection(db, 'customers'), {
+                    name,
+                    phone: document.getElementById('cPhone').value.trim(),
+                    email: document.getElementById('cEmail').value.trim(),
+                    createdAt: serverTimestamp()
+                });
+                closeCustomerModal();
+                showView('customers');
+            }catch(err){
+                alert('تعذر حفظ العميل: ' + (err.message || 'خطأ غير معروف'));
+            }finally{
+                submitBtn.disabled = false;
+            }
         });
 
-        // ------- إدارة الطلبات -------
-        const ORDERS_STORAGE_KEY = 'store_orders';
+        // ==================================================================
+        // الطلبات — مزامنة حية عبر Firestore
+        // ==================================================================
         let orders = [];
+        let unsubOrders = null;
 
-        function loadOrders(){
-            try{
-                const raw = localStorage.getItem(ORDERS_STORAGE_KEY);
-                orders = raw ? JSON.parse(raw) : defaultOrders();
-            }catch(e){
-                orders = defaultOrders();
-            }
+        function startOrdersListener(){
+            if(unsubOrders) unsubOrders();
+            unsubOrders = onSnapshot(collection(db, 'orders'), (snap) => {
+                orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderOrders();
+                renderCustomers();
+            }, (err) => console.error('orders listener error:', err));
         }
-        function saveOrders(){
-            try{ localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders)); }catch(e){}
-        }
-        function defaultOrders(){
-            const today = new Date().toISOString().slice(0, 10);
-            return [
-                { id: crypto.randomUUID(), number: '#1001', customerName: 'أحمد محمد', date: today, amount: 350, status: 'completed' },
-                { id: crypto.randomUUID(), number: '#1002', customerName: 'سارة خالد', date: today, amount: 120, status: 'pending' }
-            ];
-        }
+
         function nextOrderNumber(){
             const nums = orders
                 .map(o => parseInt(String(o.number).replace('#', ''), 10))
@@ -1171,13 +1506,17 @@
             const sorted = [...orders].sort((a, b) => (a.date < b.date ? 1 : -1));
             sorted.forEach(o => {
                 const meta = statusMeta[o.status] || statusMeta.pending;
+                const payMeta = paymentMethodMeta[o.paymentMethod];
                 const tr = document.createElement('tr');
                 tr.className = 'border-b transition-colors';
                 tr.innerHTML = `
                     <td class="py-3 px-4 text-gray-300">${escapeHtml(o.number)}</td>
-                    <td class="py-3 px-4 text-gray-200">${escapeHtml(o.customerName)}</td>
+                    <td class="py-3 px-4 text-gray-200">${escapeHtml(o.customerName)}${o.productName ? `<div class="text-xs text-gray-500">${escapeHtml(o.productName)}${o.qty ? ' × ' + o.qty : ''}</div>` : ''}</td>
                     <td class="py-3 px-4 text-gray-400">${escapeHtml(o.date)}</td>
                     <td class="py-3 px-4 text-gray-300">$${Number(o.amount).toFixed(2)}</td>
+                    <td class="py-3 px-4 text-gray-400 text-sm">
+                        ${payMeta ? `<i class="fas ${payMeta.icon} ml-1.5 text-blue-400/70"></i>${payMeta.label}` : '—'}
+                    </td>
                     <td class="py-3 px-4">
                         ${IS_OWNER ? `
                         <select data-id="${o.id}" class="order-status-select field rounded px-2 py-1 text-xs">
@@ -1198,31 +1537,29 @@
             });
 
             document.querySelectorAll('.order-status-select').forEach(sel => {
-                sel.addEventListener('change', () => {
-                    const order = orders.find(o => o.id === sel.dataset.id);
-                    if(order){
-                        order.status = sel.value;
-                        saveOrders();
-                        renderOrders();
-                        renderHomeStats();
-                        renderCustomers();
+                sel.addEventListener('change', async () => {
+                    try{
+                        await updateDoc(doc(db, 'orders', sel.dataset.id), { status: sel.value });
+                    }catch(err){
+                        alert('تعذر تحديث حالة الطلب: ' + (err.message || 'خطأ غير معروف'));
                     }
                 });
             });
             document.querySelectorAll('.delete-order').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    orders = orders.filter(o => o.id !== btn.dataset.id);
-                    saveOrders();
-                    renderOrders();
-                    renderHomeStats();
-                    renderCustomers();
+                btn.addEventListener('click', async () => {
+                    if(!confirm('هل تريد حذف هذا الطلب؟')) return;
+                    try{
+                        await deleteDoc(doc(db, 'orders', btn.dataset.id));
+                    }catch(err){
+                        alert('تعذر حذف الطلب: ' + (err.message || 'خطأ غير معروف'));
+                    }
                 });
             });
 
             renderHomeStats();
         }
 
-        // ------- نافذة إضافة طلب -------
+        // ------- نافذة إضافة طلب (يدوي، للمالك فقط) -------
         const orderModal = document.getElementById('orderModal');
         const orderForm = document.getElementById('orderForm');
 
@@ -1243,27 +1580,32 @@
         orderModal.addEventListener('click', (e) => { if(e.target === orderModal) closeOrderModal(); });
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && orderModal.classList.contains('active')) closeOrderModal(); });
 
-        orderForm.addEventListener('submit', (e) => {
+        orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const customerName = document.getElementById('oCustomerName').value.trim();
             if(!customerName) return;
-            const newOrder = {
-                id: crypto.randomUUID(),
-                number: nextOrderNumber(),
-                customerName,
-                amount: parseFloat(document.getElementById('oAmount').value) || 0,
-                date: document.getElementById('oDate').value || new Date().toISOString().slice(0, 10),
-                status: document.getElementById('oStatus').value
-            };
-            orders.unshift(newOrder);
-            saveOrders();
-            renderOrders();
-            renderCustomers();
-            closeOrderModal();
-            showView('orders');
+            const submitBtn = orderForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            try{
+                await addDoc(collection(db, 'orders'), {
+                    number: nextOrderNumber(),
+                    customerName,
+                    customerEmail: auth.currentUser ? auth.currentUser.email : '',
+                    amount: parseFloat(document.getElementById('oAmount').value) || 0,
+                    date: document.getElementById('oDate').value || new Date().toISOString().slice(0, 10),
+                    status: document.getElementById('oStatus').value,
+                    createdAt: serverTimestamp()
+                });
+                closeOrderModal();
+                showView('orders');
+            }catch(err){
+                alert('تعذر حفظ الطلب: ' + (err.message || 'خطأ غير معروف'));
+            }finally{
+                submitBtn.disabled = false;
+            }
         });
 
-        // ------- إحصائيات الصفحة الرئيسية (مرتبطة بالطلبات الحقيقية) -------
+        // ------- إحصائيات الصفحة الرئيسية -------
         const homeTotalSales = document.getElementById('homeTotalSales');
         const homePendingOrders = document.getElementById('homePendingOrders');
         const homeRecentOrdersBody = document.getElementById('homeRecentOrdersBody');
@@ -1297,50 +1639,8 @@
         }
 
         // ==================================================================
-        // نظام تسجيل الدخول والصلاحيات
+        // نظام تسجيل الدخول — Firebase Authentication الحقيقي
         // ==================================================================
-        const USERS_KEY = 'store_users';
-        const AUTHORIZED_KEY = 'store_authorized_emails';
-        const SESSION_KEY = 'store_session';
-        const OWNER_EMAIL = 'osaidqazzaz@gmail.com';
-
-        let users = [];
-        let authorizedEmails = [];
-
-        function loadUsers(){
-            try{ users = JSON.parse(localStorage.getItem(USERS_KEY)) || []; }catch(e){ users = []; }
-        }
-        function saveUsers(){
-            try{ localStorage.setItem(USERS_KEY, JSON.stringify(users)); }catch(e){}
-        }
-        function loadAuthorized(){
-            try{ authorizedEmails = JSON.parse(localStorage.getItem(AUTHORIZED_KEY)) || []; }catch(e){ authorizedEmails = []; }
-            // إيميل المالك مصرح له بشكل دائم ولا يمكن أن يغيب عن القائمة
-            if(!authorizedEmails.includes(OWNER_EMAIL)){
-                authorizedEmails.unshift(OWNER_EMAIL);
-                saveAuthorized();
-            }
-        }
-        function saveAuthorized(){
-            try{ localStorage.setItem(AUTHORIZED_KEY, JSON.stringify(authorizedEmails)); }catch(e){}
-        }
-        function isAuthorized(email){
-            return authorizedEmails.includes((email || '').toLowerCase());
-        }
-        function getSession(){
-            return localStorage.getItem(SESSION_KEY) || '';
-        }
-        function setSession(email){
-            localStorage.setItem(SESSION_KEY, email.toLowerCase());
-        }
-        function clearSession(){
-            localStorage.removeItem(SESSION_KEY);
-        }
-        function findUser(email){
-            return users.find(u => u.email.toLowerCase() === (email || '').toLowerCase());
-        }
-
-        // ------- تبويبات تسجيل الدخول / حساب جديد -------
         const tabLogin = document.getElementById('tabLogin');
         const tabRegister = document.getElementById('tabRegister');
         const loginForm = document.getElementById('loginForm');
@@ -1370,83 +1670,138 @@
         tabLogin.addEventListener('click', showLoginTab);
         tabRegister.addEventListener('click', showRegisterTab);
 
+        // ترجمة أكواد أخطاء Firebase لرسائل عربية مفهومة
+        function friendlyAuthError(err){
+            const code = err && err.code || '';
+            const map = {
+                'auth/invalid-email': 'صيغة البريد الإلكتروني غير صحيحة.',
+                'auth/user-not-found': 'لا يوجد حساب بهذا البريد الإلكتروني.',
+                'auth/wrong-password': 'كلمة المرور غير صحيحة.',
+                'auth/invalid-credential': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
+                'auth/email-already-in-use': 'يوجد حساب مسجّل مسبقًا بهذا البريد الإلكتروني.',
+                'auth/weak-password': 'كلمة المرور ضعيفة، اختر كلمة أطول.',
+                'auth/too-many-requests': 'محاولات كثيرة، حاول بعد قليل.',
+                'auth/network-request-failed': 'تحقق من اتصالك بالإنترنت.'
+            };
+            return map[code] || 'حدث خطأ، حاول مرة أخرى.';
+        }
+
         // ------- تسجيل الدخول -------
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalLabel = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الدخول...';
+
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
-            const user = findUser(email);
             const errorBox = document.getElementById('loginError');
 
-            if(!user || user.password !== password){
-                errorBox.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+            try{
+                await signInWithEmailAndPassword(auth, email, password);
+                errorBox.classList.add('hidden');
+                loginForm.reset();
+                // onAuthStateChanged هي اللي رح تتكفل بعرض لوحة التحكم
+            }catch(err){
+                errorBox.textContent = friendlyAuthError(err);
                 errorBox.classList.remove('hidden');
-                return;
+            }finally{
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalLabel;
             }
-            errorBox.classList.add('hidden');
-            setSession(user.email);
-            loginForm.reset();
-            route();
         });
 
         // ------- إنشاء حساب جديد -------
-        registerForm.addEventListener('submit', (e) => {
+        registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            const originalLabel = submitBtn.textContent;
             const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
             const password = document.getElementById('regPassword').value;
             const confirm = document.getElementById('regPasswordConfirm').value;
             const errorBox = document.getElementById('registerError');
 
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailPattern.test(email)){
+                errorBox.textContent = 'الرجاء إدخال بريد إلكتروني صالح.';
+                errorBox.classList.remove('hidden');
+                return;
+            }
+            if(password.length < 8){
+                errorBox.textContent = 'كلمة المرور يجب أن تكون 8 خانات على الأقل.';
+                errorBox.classList.remove('hidden');
+                return;
+            }
             if(password !== confirm){
                 errorBox.textContent = 'كلمتا المرور غير متطابقتين.';
                 errorBox.classList.remove('hidden');
                 return;
             }
-            if(findUser(email)){
-                errorBox.textContent = 'يوجد حساب مسجّل مسبقًا بهذا البريد الإلكتروني.';
-                errorBox.classList.remove('hidden');
-                return;
-            }
             errorBox.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإنشاء...';
 
-            const newUser = { name, email: email.toLowerCase(), password };
-            users.push(newUser);
-            saveUsers();
-
-            registerForm.reset();
-            setSession(newUser.email);
-            route();
+            try{
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                if(name) await updateProfile(cred.user, { displayName: name });
+                await sendEmailVerification(cred.user);
+                registerForm.reset();
+                if(email === OWNER_EMAIL.toLowerCase()){
+                    alert('تم إنشاء حساب المالك! لازم تفعّل بريدك الإلكتروني (رح توصلك رسالة تحقق) قبل ما تقدر تدير المتجر.');
+                }
+                // onAuthStateChanged هي اللي رح تتكفل بعرض لوحة التحكم
+            }catch(err){
+                errorBox.textContent = friendlyAuthError(err);
+                errorBox.classList.remove('hidden');
+            }finally{
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalLabel;
+            }
         });
 
         // ------- تسجيل الخروج -------
-        function logout(){
-            clearSession();
+        async function logout(){
+            try{ await signOut(auth); }catch(e){}
             loginForm.reset();
             registerForm.reset();
             showLoginTab();
-            route();
         }
         document.getElementById('dashboardLogout').addEventListener('click', logout);
 
-        // ------- إدارة البريد الإلكتروني المصرح له (صفحة الإعدادات) -------
+        // ==================================================================
+        // إدارة الموظفين المصرح لهم (admins) — صفحة الإعدادات، للمالك فقط
+        // ==================================================================
+        let adminEmails = [];
+        let unsubAdmins = null;
+
+        function startAdminsListener(){
+            if(unsubAdmins) unsubAdmins();
+            unsubAdmins = onSnapshot(collection(db, 'admins'), (snap) => {
+                adminEmails = snap.docs.map(d => d.id);
+                renderAuthorizedEmails();
+            }, (err) => console.error('admins listener error:', err));
+        }
+
         const authorizedEmailsList = document.getElementById('authorizedEmailsList');
 
         function renderAuthorizedEmails(){
             authorizedEmailsList.innerHTML = '';
-            const currentEmail = getSession();
-            authorizedEmails.forEach(email => {
-                const isOwner = email === OWNER_EMAIL;
+            const currentEmail = (auth.currentUser && auth.currentUser.email || '').toLowerCase();
+            const allEmails = [OWNER_EMAIL, ...adminEmails.filter(e => e !== OWNER_EMAIL)];
+            allEmails.forEach(email => {
+                const isOwnerRow = email === OWNER_EMAIL;
                 const row = document.createElement('div');
                 row.className = 'authorized-row flex items-center justify-between border border-white/10 rounded-lg px-4 py-2.5';
                 row.innerHTML = `
                     <span class="text-gray-200 text-sm flex items-center gap-2">
                         <i class="fas fa-envelope text-blue-400/70"></i>
                         ${escapeHtml(email)}
-                        ${isOwner ? '<span class="badge-success px-2 py-0.5 rounded text-xs">المالك</span>' : ''}
+                        ${isOwnerRow ? '<span class="badge-success px-2 py-0.5 rounded text-xs">المالك</span>' : ''}
                         ${email === currentEmail ? '<span class="badge-stock px-2 py-0.5 rounded text-xs">أنت</span>' : ''}
                     </span>
-                    ${isOwner
+                    ${isOwnerRow
                         ? `<i class="fas fa-lock text-gray-600 text-sm" title="لا يمكن إزالة المالك"></i>`
                         : `<button data-email="${escapeHtml(email)}" class="remove-authorized text-gray-400 hover:text-red-400 icon-btn">
                                <i class="fas fa-trash text-sm"></i>
@@ -1455,37 +1810,138 @@
                 authorizedEmailsList.appendChild(row);
             });
             document.querySelectorAll('.remove-authorized').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    authorizedEmails = authorizedEmails.filter(e => e !== btn.dataset.email);
-                    saveAuthorized();
-                    renderAuthorizedEmails();
+                btn.addEventListener('click', async () => {
+                    try{
+                        await deleteDoc(doc(db, 'admins', btn.dataset.email));
+                    }catch(err){
+                        alert('تعذر إزالة الصلاحية: ' + (err.message || 'خطأ غير معروف'));
+                    }
                 });
             });
         }
 
-        document.getElementById('addAuthorizedForm').addEventListener('submit', (e) => {
+        document.getElementById('addAuthorizedForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const input = document.getElementById('newAuthorizedEmail');
             const errorBox = document.getElementById('addAuthorizedError');
             const email = input.value.trim().toLowerCase();
 
-            if(authorizedEmails.includes(email)){
+            if(email === OWNER_EMAIL || adminEmails.includes(email)){
                 errorBox.textContent = 'هذا البريد الإلكتروني مضاف مسبقًا.';
                 errorBox.classList.remove('hidden');
                 return;
             }
             errorBox.classList.add('hidden');
-            authorizedEmails.push(email);
-            saveAuthorized();
-            renderAuthorizedEmails();
-            input.value = '';
+            try{
+                await setDoc(doc(db, 'admins', email), {
+                    addedAt: serverTimestamp(),
+                    addedBy: auth.currentUser ? auth.currentUser.email : ''
+                });
+                input.value = '';
+            }catch(err){
+                errorBox.textContent = 'تعذر الإضافة: ' + (err.message || 'خطأ غير معروف');
+                errorBox.classList.remove('hidden');
+            }
         });
 
-        // ------- التوجيه حسب حالة الدخول -------
+        // ==================================================================
+        // بانر "يرجى تفعيل بريدك الإلكتروني" — يظهر لصاحب صلاحية لم يفعّل بريده بعد
+        // ==================================================================
+        function showVerifyBanner(show){
+            let banner = document.getElementById('verifyBanner');
+            if(show){
+                if(!banner){
+                    banner = document.createElement('div');
+                    banner.id = 'verifyBanner';
+                    banner.className = 'bg-yellow-500/10 border-b border-yellow-500/30 text-yellow-300 text-sm px-6 py-3 flex items-center justify-between gap-3';
+                    banner.innerHTML = `
+                        <span><i class="fas fa-triangle-exclamation ml-1.5"></i> يرجى تفعيل بريدك الإلكتروني لتتمكن من إدارة المتجر كمالك — تحقق من صندوق الوارد (وربما الـ Spam).</span>
+                        <button id="resendVerifyBtn" class="underline shrink-0">إعادة إرسال رابط التفعيل</button>
+                    `;
+                    const main = document.querySelector('#dashboardScreen main');
+                    main.insertBefore(banner, main.firstChild);
+                    document.getElementById('resendVerifyBtn').addEventListener('click', async () => {
+                        try{
+                            await sendEmailVerification(auth.currentUser);
+                            alert('تم إرسال رابط التفعيل مرة أخرى. بعد ما تفعّل، سجّل خروج ورجّع سجّل دخول.');
+                        }catch(err){
+                            alert('تعذر إرسال الرابط، حاول لاحقًا.');
+                        }
+                    });
+                }
+            }else if(banner){
+                banner.remove();
+            }
+        }
+
+        // ==================================================================
+        // لون وتصميم المتجر — يُطبَّق على كل الزوار فورًا عبر Firestore
+        // ==================================================================
+        // ملاحظة: بنغيّر بس متغيّر CSS اسمه --glow، وهو المتحكم باللون الرئيسي
+        // (الإضاءة، الحدود المتوهجة، الأزرار، الشارات...) بينما التأثيرات
+        // نفسها (الزجاج الشفاف، التوهج عند مرور الماوس، الحركات) ما بتتغيّر
+        // إطلاقًا — بس بلونها الجديد.
+        let unsubTheme = null;
+
+        function hexToRgbTriplet(hex){
+            hex = (hex || '#2196ff').replace('#', '');
+            if(hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `${r}, ${g}, ${b}`;
+        }
+        function applyAccentColor(hex){
+            document.documentElement.style.setProperty('--glow', hexToRgbTriplet(hex));
+            const picker = document.getElementById('themeColorPicker');
+            const label = document.getElementById('themeColorValue');
+            if(picker) picker.value = hex;
+            if(label) label.textContent = hex;
+        }
+
+        function startThemeListener(){
+            if(unsubTheme) unsubTheme();
+            unsubTheme = onSnapshot(doc(db, 'settings', 'theme'), (snap) => {
+                const hex = snap.exists() ? (snap.data().accentColor || '#2196ff') : '#2196ff';
+                applyAccentColor(hex);
+            }, (err) => console.error('theme listener error:', err));
+        }
+
+        const themeColorPicker = document.getElementById('themeColorPicker');
+        if(themeColorPicker){
+            themeColorPicker.addEventListener('input', (e) => applyAccentColor(e.target.value));
+        }
+        document.querySelectorAll('.theme-swatch').forEach(btn => {
+            btn.addEventListener('click', () => applyAccentColor(btn.dataset.color));
+        });
+        const saveThemeBtn = document.getElementById('saveThemeColor');
+        if(saveThemeBtn){
+            saveThemeBtn.addEventListener('click', async () => {
+                const hex = document.getElementById('themeColorPicker').value;
+                saveThemeBtn.disabled = true;
+                try{
+                    await setDoc(doc(db, 'settings', 'theme'), {
+                        accentColor: hex,
+                        updatedAt: serverTimestamp(),
+                        updatedBy: auth.currentUser ? auth.currentUser.email : ''
+                    });
+                    const status = document.getElementById('themeSaveStatus');
+                    status.classList.remove('hidden');
+                    setTimeout(() => status.classList.add('hidden'), 2000);
+                }catch(err){
+                    alert('تعذر حفظ اللون: ' + (err.message || 'خطأ غير معروف'));
+                }finally{
+                    saveThemeBtn.disabled = false;
+                }
+            });
+        }
+
+        // ==================================================================
+        // التوجيه حسب حالة الدخول — Firebase Auth هو مصدر الحقيقة الوحيد
+        // ==================================================================
         const authScreen = document.getElementById('authScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
 
-        // إظهار/إخفاء عناصر التحكم الخاصة بالمالك فقط (أزرار الإضافة ورابط الإعدادات)
         function applyRolePermissions(){
             document.getElementById('openAddProduct').classList.toggle('hidden', !IS_OWNER);
             document.getElementById('openAddOrder').classList.toggle('hidden', !IS_OWNER);
@@ -1494,41 +1950,55 @@
             if(settingsLink) settingsLink.classList.toggle('hidden', !IS_OWNER);
         }
 
-        function route(){
-            const email = getSession();
-            const user = email ? findUser(email) : null;
+        function stopAllListeners(){
+            if(unsubProducts){ unsubProducts(); unsubProducts = null; }
+            if(unsubOrders){ unsubOrders(); unsubOrders = null; }
+            if(unsubCustomers){ unsubCustomers(); unsubCustomers = null; }
+            if(unsubAdmins){ unsubAdmins(); unsubAdmins = null; }
+        }
 
-            authScreen.classList.add('hidden');
-            dashboardScreen.classList.add('hidden');
+        // لون المتجر يُطبَّق فورًا حتى قبل تسجيل الدخول (يشمل شاشة الدخول نفسها)
+        startThemeListener();
+
+        onAuthStateChanged(auth, async (user) => {
+            stopAllListeners();
 
             if(!user){
+                IS_OWNER = false;
                 authScreen.classList.remove('hidden');
+                dashboardScreen.classList.add('hidden');
+                showVerifyBanner(false);
                 showLoginTab();
                 return;
             }
 
-            IS_OWNER = isAuthorized(user.email);
-            dashboardScreen.classList.remove('hidden');
-            document.getElementById('currentUserName').textContent = (user.name || user.email) + (IS_OWNER ? '' : ' (زبون)');
-            applyRolePermissions();
-            renderAuthorizedEmails();
-            renderProducts();
-            renderOrders();
-            renderCustomers();
-            showView('home');
-        }
+            const email = (user.email || '').toLowerCase();
+            let isAdminEmail = (email === OWNER_EMAIL.toLowerCase());
+            if(!isAdminEmail){
+                try{
+                    const adminSnap = await getDoc(doc(db, 'admins', email));
+                    isAdminEmail = adminSnap.exists();
+                }catch(e){
+                    isAdminEmail = false;
+                }
+            }
+            IS_OWNER = isAdminEmail && user.emailVerified;
 
-        // ------- تشغيل أولي -------
-        loadProducts();
-        renderProducts();
-        loadCustomers();
-        loadOrders();
-        renderOrders();
-        renderCustomers();
-        loadUsers();
-        loadAuthorized();
-        route();
+            authScreen.classList.add('hidden');
+            dashboardScreen.classList.remove('hidden');
+            document.getElementById('currentUserName').textContent =
+                (user.displayName || user.email) + (IS_OWNER ? '' : (isAdminEmail ? ' (بانتظار تفعيل البريد)' : ' (زبون)'));
+
+            showVerifyBanner(isAdminEmail && !user.emailVerified);
+            applyRolePermissions();
+            startProductsListener();
+            startOrdersListener();
+            startCustomersListener();
+            if(IS_OWNER) startAdminsListener();
+            showView('home');
+        });
     </script>
+
 
 </body>
 </html>
