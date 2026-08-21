@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Osayd shop</title>
     <!-- استدعاء مكتبة Tailwind CSS للتصميم -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -307,9 +307,33 @@
             border-color: rgba(var(--glow),0.3);
         }
 
+        /* عينات لون التنسيق بصفحة الإعدادات */
+        .theme-swatch{
+            transition: transform .15s ease;
+        }
+        .theme-swatch:hover{ transform: scale(1.12); }
+
         @media (prefers-reduced-motion: reduce){
             .bg-orb-1, .bg-orb-2 { animation: none; }
             .cursor-glow{ display: none; }
+        }
+
+        /* ====== تحسينات إضافية لواجهة الجوال ====== */
+        @media (max-width: 767px) {
+            html, body { overflow-x: hidden; }
+            button, .btn-primary, a.sidebar-link, input.field, select.field {
+                min-height: 42px;
+            }
+            h2 { font-size: 1.05rem; }
+            table { font-size: 0.85rem; }
+            .overflow-x-auto {
+                -webkit-mask-image: linear-gradient(to left, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+                mask-image: linear-gradient(to left, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+            }
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
         }
     </style>
 </head>
@@ -373,39 +397,39 @@
 
     <!-- ============ لوحة التحكم / التصفح (تُعرض لجميع الحسابات، مع تقييد الصلاحيات للزبائن) ============ -->
     <div id="dashboardScreen" class="hidden">
-    <div class="flex h-screen overflow-hidden relative z-10">
+    <div class="flex flex-col md:flex-row md:h-screen md:overflow-hidden relative z-10 min-h-screen">
 
-        <!-- القائمة الجانبية -->
-        <aside class="w-64 glass text-gray-300 flex flex-col">
-            <div class="h-16 flex items-center justify-center border-b border-white/5">
-                <h1 class="text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
+        <!-- القائمة الجانبية: شريط علوي أفقي بالجوال، عمودي جانبي باللابتوب -->
+        <aside class="w-full md:w-64 glass text-gray-300 flex flex-col shrink-0">
+            <div class="h-14 md:h-16 flex items-center justify-center border-b border-white/5 shrink-0">
+                <h1 class="text-xl md:text-2xl font-bold text-white">Osayd <span class="text-blue-400">shop</span></h1>
             </div>
-            <nav class="flex-1 px-4 py-6 space-y-2">
-                <a data-view="home" class="sidebar-link active flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-home ml-3"></i> الرئيسية
+            <nav class="flex flex-row md:flex-col overflow-x-auto md:overflow-visible px-2 md:px-4 py-2 md:py-6 gap-1 md:gap-0 md:space-y-2 md:flex-1">
+                <a data-view="home" class="sidebar-link active flex items-center shrink-0 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg">
+                    <i class="fas fa-home ml-2 md:ml-3"></i> الرئيسية
                 </a>
-                <a data-view="products" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-box ml-3"></i> المنتجات
+                <a data-view="products" class="sidebar-link flex items-center shrink-0 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg">
+                    <i class="fas fa-box ml-2 md:ml-3"></i> المنتجات
                 </a>
-                <a data-view="orders" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-shopping-cart ml-3"></i> الطلبات
+                <a data-view="orders" class="sidebar-link flex items-center shrink-0 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg">
+                    <i class="fas fa-shopping-cart ml-2 md:ml-3"></i> الطلبات
                 </a>
-                <a data-view="customers" class="sidebar-link flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-users ml-3"></i> العملاء
+                <a data-view="customers" class="sidebar-link flex items-center shrink-0 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg">
+                    <i class="fas fa-users ml-2 md:ml-3"></i> العملاء
                 </a>
-                <a data-view="settings" class="sidebar-link owner-only flex items-center px-4 py-2 rounded-lg">
-                    <i class="fas fa-cog ml-3"></i> الإعدادات
+                <a data-view="settings" class="sidebar-link owner-only flex items-center shrink-0 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg">
+                    <i class="fas fa-cog ml-2 md:ml-3"></i> الإعدادات
                 </a>
             </nav>
         </aside>
 
         <!-- المحتوى الرئيسي -->
-        <main class="flex-1 flex flex-col overflow-y-auto">
+        <main class="flex-1 flex flex-col md:overflow-y-auto">
 
             <!-- الشريط العلوي -->
-            <header class="h-16 glass flex items-center justify-between px-6">
-                <div class="text-white text-lg font-semibold" id="pageTitle">نظرة عامة</div>
-                <div class="flex items-center space-x-4 space-x-reverse">
+            <header class="h-14 md:h-16 glass flex items-center justify-between px-4 md:px-6 sticky top-0 z-20">
+                <div class="text-white text-base md:text-lg font-semibold" id="pageTitle">نظرة عامة</div>
+                <div class="flex items-center space-x-3 md:space-x-4 space-x-reverse">
                     <button class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fas fa-bell"></i></button>
                     <button id="dashboardLogout" class="text-gray-400 hover:text-red-400 transition-colors" title="تسجيل الخروج">
                         <i class="fas fa-sign-out-alt"></i>
@@ -419,7 +443,7 @@
                 </div>
             </header>
 
-            <div class="p-6">
+            <div class="p-4 md:p-6">
 
                 <!-- ============ صفحة الرئيسية ============ -->
                 <section id="view-home" class="view active">
